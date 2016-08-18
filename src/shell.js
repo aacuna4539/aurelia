@@ -2,10 +2,11 @@
  * Created by rigel on 8/10/16.
  */
 import toastr from 'toastr';
+import moment from 'moment';
 
 export class Shell {
     constructor() {
-
+        setInterval(() => this.timeIs = moment().format('hh:mmss.SSS'), 100);
     }
 
     configureRouter(config, router) {

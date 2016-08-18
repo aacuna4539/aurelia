@@ -20,10 +20,17 @@ export class Sponsors {
         this.person = new Person();
         this.person.firstName = 'Murray';
         this.person.lastName = 'Rothbard';
+        this.trades = [{amount:99.93,time:new Date()}];
+        setTimeout(() => this.trades.push({amount:33.54, time: new Date()}), 3000);
     }
 
     doSomething(a) {
         console.log(a);
+    }
+
+    myinterceptor(method, update, value) {
+        console.log(value);
+        update(value);
     }
 }
 

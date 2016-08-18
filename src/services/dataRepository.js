@@ -5,6 +5,12 @@ import { eventsData } from 'services/eventsData';
 import { jobsData, states, jobTypes, jobSkills } from 'services/jobsData';
 import moment from 'moment';
 
+// find out wtf is going on here
+import { BindingSignaler } from '../../jspm_packages/npm/aurelia-templating-resources@1.0.0/aurelia-templating-resources';
+
+import { inject } from 'aurelia-framework';
+
+
 function filterAndFormat(pastOrFuture, events) {
     var results = JSON.parse(JSON.stringify(events));
     if (pastOrFuture == 'past') {
@@ -20,7 +26,12 @@ function filterAndFormat(pastOrFuture, events) {
     return results;
 }
 
+@inject(BindingSignaler)
 export class DataRepository {
+    constructor(bindingSignaler) {
+        setInterval(() => { bindingSignaler.signal('check-freshness');}, 1000);
+    }
+
     getEvents(pastOrFuture) {
         var promise = new Promise((resolve, reject) => {
             if (!this.events) {
