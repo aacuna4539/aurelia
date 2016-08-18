@@ -1,6 +1,9 @@
 /**
  * Created by rigel on 8/10/16.
  */
+
+import { computedFrom } from 'aurelia-framework';
+
 export class Sponsors {
     constructor() {
         this.message = "Sponsors";
@@ -14,9 +17,22 @@ export class Sponsors {
         this.styleObject = { background: 'green'};
         this.customerColor = 'purple';
         this.customerStatus = 'bad';
+        this.person = new Person();
+        this.person.firstName = 'Murray';
+        this.person.lastName = 'Rothbard';
     }
 
     doSomething(a) {
         console.log(a);
     }
+}
+
+class Person {
+    firstName: 'Murray';
+    lastName: 'Rothbard';
+
+    // computedFrom decorator prevents dirty checking.  real use case would be
+    // when dealing with many many computed bindings.
+    @computedFrom('firstName', 'lastName')
+    get fullName() { return this.firstName + ' ' + this.lastName; }
 }

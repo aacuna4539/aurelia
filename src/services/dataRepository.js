@@ -16,11 +16,6 @@ function filterAndFormat(pastOrFuture, events) {
     else {
         results = results;
     }
-    results.forEach(item => {
-        var dateTime = moment(item.dateTime)
-            .format("MM/DD/YYYY HH:mm");
-        item.dateTime = dateTime;
-    });
 
     return results;
 }

@@ -4,4 +4,7 @@
     <input type="text" ref="input1">
     <div>${input1.value}</div>
     <div repeat.for="[key, value] of mapCollection">${key} : ${value}</div>
+    <input type="text" value.bind="person.firstName" />
+    <input type="text" value.bind="person.lastName" />
+    ${person.fullName}
 </template>
