@@ -1,0 +1,7 @@
+<template>
+    <div textContent.one-time="message"></div>
+    <button type="button" click.call="doSomething(message)">Click Me</button>
+    <input type="text" ref="input1">
+    <div>${input1.value}</div>
+    <div repeat.for="[key, value] of mapCollection">${key} : ${value}</div>
+</template>
