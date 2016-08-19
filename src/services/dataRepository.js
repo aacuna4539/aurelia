@@ -41,12 +41,12 @@ export class DataRepository {
         var promise = new Promise((resolve, reject) => {
             if (!this.events) {
                 this.httpClient.get(this.apiRoot + 'api/Events')
+                this.httpClient.get(this.apiRoot +'api/Events')
                     .then(result => {
                         var data = JSON.parse(result.response);
-                        this.events = data.sort((a, b) => {
-                            a.dateTime >= b.dateTime ? 1 : -1;
-                            resolve(filterAndFormat(pastOrFuture, this.events));
-                        });
+                        this.events = data.sort((a,b) =>
+                            a.dateTime >= b.dateTime ? 1 : -1);
+                        resolve(filterAndFormat(pastOrFuture, this.events));
                     });
 
             } else {

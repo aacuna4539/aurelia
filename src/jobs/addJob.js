@@ -1,12 +1,14 @@
 /**
  * Created by rigel on 8/14/16.
  */
-import { inject } from 'aurelia-framework';
+import { inject, NewInstance } from 'aurelia-framework';
 import { DataRepository } from 'services/dataRepository';
+import { ValidationController, validateTrigger } from 'aurelia-validation';
+import { ValidationRules } from 'aurelia-validatejs';
 
-@inject(DataRepository)
+@inject(DataRepository, NewInstance.of(ValidationController), validateTrigger, ValidationRules)
 export class AddJob {
-    constructor(dataRepository) {
+    constructor(dataRepository, validationController, validateTrigger, validationRules) {
         this.job = { jobType: 'Full Time', jobSkills: []};
         this.dataRepository = dataRepository;
         this.dataRepository.getStates().then(states => {
@@ -20,6 +22,16 @@ export class AddJob {
         this.dataRepository.getJobSkills().then(jobSkills => {
             this.jobSkills = jobSkills;
         });
+
+        this.validationController = validationController;
+        this.validationController.validateTrigger = validateTrigger.blur;
+        this.validationRules = validationRules;
+
+        this.validationRules
+            .ensure('job.title')
+            .length({ minimum: 3})
+            .required({ message: 'Three character minimum'})
+            .on(this);
     }
 
     activate(params, routeConfig, navigationInstruction) {
@@ -27,6 +39,9 @@ export class AddJob {
     }
 
     save() {
+        let errors = this.validationController.validate();
+        /*errors.then()*/
+
         if (this.job.needDate) {
             this.job.needDate = new Date(this.job.needDate);
         }

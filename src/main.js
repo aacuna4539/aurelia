@@ -5,11 +5,13 @@ import 'bootstrap';
 import { ViewLocator } from 'aurelia-framework';
 
 export function configure(aurelia) {
-    aurelia.use.instance('apiRoot', 'http://');
+    aurelia.use.instance('apiRoot', 'http://brianapidemos.azurewebsites.net/CommunityApi/');
     aurelia.use.globalResources('common/dateFormat'); // use instead of putting <require from="foo"></require> in templates
     aurelia.use
         .standardConfiguration()
-        .developmentLogging();
+        .developmentLogging()
+        .plugin('aurelia-dialog')
+        .plugin('aurelia-validation');
 
     aurelia.start().then( a => a.setRoot('shell'));
 }

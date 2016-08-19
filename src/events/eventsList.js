@@ -1,9 +1,10 @@
 /**
  * Created by rigel on 8/10/16.
  */
-import {inject} from 'aurelia-framework';
-import {DataRepository} from 'services/dataRepository';
-import {Router, activationStrategy} from 'aurelia-router';
+
+import { inject } from 'aurelia-framework';
+import { DataRepository } from 'services/dataRepository';
+import { Router, activationStrategy } from 'aurelia-router';
 
 @inject(DataRepository, Router)
 export class EventsList {

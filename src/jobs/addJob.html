@@ -1,8 +1,8 @@
 <template>
-    <form submit.delegate='save()'>
+    <form submit.delegate='save()' >
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" value.bind="job.title"
+            <input type="text" value.bind="job.title & validate"
                    class="form-control" id="title" placeholder="Title">
         </div>
         <div class="form-group">
