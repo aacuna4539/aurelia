@@ -11,7 +11,8 @@ export function configure(aurelia) {
         .standardConfiguration()
         .developmentLogging()
         .plugin('aurelia-dialog')
-        .plugin('aurelia-validation');
+        .plugin('aurelia-validation')
+        .plugin('aurelia-validatejs');
 
     aurelia.start().then( a => a.setRoot('shell'));
 }

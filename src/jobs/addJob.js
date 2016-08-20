@@ -4,13 +4,14 @@
 import { inject, NewInstance } from 'aurelia-framework';
 import { DataRepository } from 'services/dataRepository';
 import { ValidationController, validateTrigger } from 'aurelia-validation';
-import { ValidationRules } from 'aurelia-validatejs';
+import { required, ValidationRules } from 'aurelia-validatejs';
 
-@inject(DataRepository, NewInstance.of(ValidationController), validateTrigger, ValidationRules)
+@inject(DataRepository, NewInstance.of(ValidationController), validateTrigger, ValidationRules, required)
 export class AddJob {
-    constructor(dataRepository, validationController, validateTrigger, validationRules) {
+
+    constructor(dataRepository, validationController, validateTrigger, validationRules, required) {
         this.job = { jobType: 'Full Time', jobSkills: []};
-        this.dataRepository = dataRepository;
+                this.dataRepository = dataRepository;
         this.dataRepository.getStates().then(states => {
             this.states = states;
         });
@@ -24,15 +25,16 @@ export class AddJob {
         });
 
         this.validationController = validationController;
-        this.validationController.validateTrigger = validateTrigger.blur;
+        this.validationController.validateTrigger = validateTrigger.manual;
         this.validationRules = validationRules;
-
         this.validationRules
             .ensure('job.title')
             .length({ minimum: 3})
             .required({ message: 'Three character minimum'})
-            .on(this);
+            .on(AddJob);
     }
+
+
 
     activate(params, routeConfig, navigationInstruction) {
         this.router = navigationInstruction.router;
