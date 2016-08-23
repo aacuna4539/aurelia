@@ -3,10 +3,23 @@
  */
 import toastr from 'toastr';
 import moment from 'moment';
+import { EventAggregator } from '../jspm_packages/npm/aurelia-event-aggregator@1.0.0/aurelia-event-aggregator';
+import { NotificationPayload } from 'common/NotificationPayload';
+import { inject } from 'aurelia-framework';
 
+
+@inject(EventAggregator)
 export class Shell {
-    constructor() {
+    constructor(eventAggregator) {
+        this.eventAggregator = eventAggregator;
+        this.eventAggregator.subscribe(NotificationPayload, payload => {
+            this.notification = payload.time;
+        });
         setInterval(() => this.timeIs = moment().format('hh:mmss.SSS'), 100);
+    }
+
+    clearNotification () {
+        this.notification = null;
     }
 
     configureRouter(config, router) {

@@ -7,10 +7,12 @@ import moment from 'moment';
 
 // find out wtf is going on here
 import { BindingSignaler } from '../../jspm_packages/npm/aurelia-templating-resources@1.0.0/aurelia-templating-resources';
+import { EventAggregator } from '../../jspm_packages/npm/aurelia-event-aggregator@1.0.0/aurelia-event-aggregator';
 
 import { inject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-http-client';
 import { HttpClient as HttpFetch, json } from 'aurelia-fetch-client';
+import { NotificationPayload } from 'common/NotificationPayload';
 
 
 function filterAndFormat(pastOrFuture, events) {
@@ -28,13 +30,21 @@ function filterAndFormat(pastOrFuture, events) {
     return results;
 }
 
-@inject(BindingSignaler, HttpClient, 'apiRoot', HttpFetch)
+@inject(BindingSignaler, HttpClient, 'apiRoot', HttpFetch, EventAggregator)
 export class DataRepository {
-    constructor(bindingSignaler, httpClient, apiRoot, httpFetch) {
+    constructor(bindingSignaler, httpClient, apiRoot, httpFetch, eventAggregator) {
         this.httpClient = httpClient;
         this.apiRoot = apiRoot;
         this.httpFetch = httpFetch;
+        this.eventAggregator = eventAggregator;
+
+
         setInterval(() => { bindingSignaler.signal('check-freshness');}, 1000);
+        setTimeout(() => this.backgroundNotificationReceived(this.eventAggregator), 5000);
+    }
+
+    backgroundNotificationReceived(ea) {
+        ea.publish(new NotificationPayload(moment().format('HH:mm:ss')));
     }
 
     getEvents(pastOrFuture) {
