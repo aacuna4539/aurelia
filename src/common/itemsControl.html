@@ -1,0 +1,9 @@
+<template>
+    <div repeat.for="item of items">
+        <template replaceable part="item-template">
+
+            <!-- don't rely on sanitizeHTML -->
+            <div innerHtml.bind='item | sanitizeHTML'></div>
+        </template>
+    </div>
+</template>

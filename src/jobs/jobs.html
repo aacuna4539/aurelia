@@ -1,6 +1,13 @@
 <template>
+    <require from="common/itemsControl"></require>
     <h3>Job Listings</h3>
     <button type='button' click.delegate='addJob()'><img src="src/images/Add-New.png"/></button>
+    <div items-control.bind="jobs">
+        <div class="rbox">
+            <h2>${title}</h2>
+            <div>${description}</div>
+        </div>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -13,7 +20,7 @@
         <tbody>
         <tr repeat.for='job of jobs'>
             <td>${job.title}</td>
-            <td>${job.needDate | dateFormat: 'MM/DD/YYYY'}</td>
+            <td>${job.needDate  | dateFormat:'MM/YYYY'}</td>
             <td>${job.location.city},${job.location.state}</td>
             <td>${job.jobSkills.join(', ')}</td>
         </tr>
