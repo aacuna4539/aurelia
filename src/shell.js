@@ -7,7 +7,6 @@ import { EventAggregator } from '../jspm_packages/npm/aurelia-event-aggregator@1
 import { NotificationPayload } from 'common/NotificationPayload';
 import { inject } from 'aurelia-framework';
 
-
 @inject(EventAggregator)
 export class Shell {
     constructor(eventAggregator) {
@@ -15,7 +14,7 @@ export class Shell {
         this.eventAggregator.subscribe(NotificationPayload, payload => {
             this.notification = payload.time;
         });
-        setInterval(() => this.timeIs = moment().format('hh:mmss.SSS'), 100);
+        setInterval(() => this.timeIs = moment().format('hh:mm.SSS'), 100);
     }
 
     clearNotification () {

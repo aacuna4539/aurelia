@@ -10,10 +10,8 @@ import { BindingSignaler } from '../../jspm_packages/npm/aurelia-templating-reso
 import { EventAggregator } from '../../jspm_packages/npm/aurelia-event-aggregator@1.0.0/aurelia-event-aggregator';
 
 import { inject } from 'aurelia-framework';
-import { HttpClient } from 'aurelia-http-client';
 import { HttpClient as HttpFetch, json } from 'aurelia-fetch-client';
 import { NotificationPayload } from 'common/NotificationPayload';
-
 
 function filterAndFormat(pastOrFuture, events) {
     var results = JSON.parse(JSON.stringify(events));
@@ -38,7 +36,6 @@ export class DataRepository {
         this.httpFetch = httpFetch;
         this.eventAggregator = eventAggregator;
 
-
         setInterval(() => { bindingSignaler.signal('check-freshness');}, 1000);
         setTimeout(() => this.backgroundNotificationReceived(this.eventAggregator), 5000);
     }
@@ -50,7 +47,7 @@ export class DataRepository {
     getEvents(pastOrFuture) {
         var promise = new Promise((resolve, reject) => {
             if (!this.events) {
-                this.httpClient.get(this.apiRoot + 'api/Events')
+                this.httpClient.get(this.apiRoot + 'api/Events');
                 this.httpClient.get(this.apiRoot +'api/Events')
                     .then(result => {
                         var data = JSON.parse(result.response);
@@ -65,7 +62,6 @@ export class DataRepository {
         });
         return promise;
     }
-
 
     getEvent(eventId) {
         return this.events.find(item => item.id == eventId);
