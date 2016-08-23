@@ -4,7 +4,7 @@
 import 'bootstrap';
 import { ViewLocator } from 'aurelia-framework';
 
-export function configure(aurelia) {
+export function configure(aurelia, config) {
     aurelia.use.instance('apiRoot', 'http://brianapidemos.azurewebsites.net/CommunityApi/');
     aurelia.use.globalResources('common/dateFormat'); // use instead of putting <require from="foo"></require> in templates
     aurelia.use
@@ -12,7 +12,8 @@ export function configure(aurelia) {
         .developmentLogging()
         .plugin('aurelia-dialog')
         .plugin('aurelia-validation')
-        .plugin('aurelia-validatejs');
+        .plugin('aurelia-validatejs')
+        .feature('bootstrap-validation');
 
     aurelia.start().then( a => a.setRoot('shell'));
 }

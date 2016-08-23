@@ -6,12 +6,13 @@ import { DataRepository } from 'services/dataRepository';
 import { ValidationController, validateTrigger } from 'aurelia-validation';
 import { required, ValidationRules } from 'aurelia-validatejs';
 
-@inject(DataRepository, NewInstance.of(ValidationController), validateTrigger, ValidationRules, required)
+@inject(DataRepository, NewInstance.of(ValidationController), validateTrigger, ValidationRules)
 export class AddJob {
 
-    constructor(dataRepository, validationController, validateTrigger, validationRules, required) {
-        this.job = { jobType: 'Full Time', jobSkills: []};
-                this.dataRepository = dataRepository;
+    job = { jobType: 'Full Time', jobSkills: [], @required title: '', @required description: ''};
+
+    constructor(dataRepository, validationController, /*validateTrigger, validationRules*/) {
+        this.dataRepository = dataRepository;
         this.dataRepository.getStates().then(states => {
             this.states = states;
         });
@@ -25,16 +26,9 @@ export class AddJob {
         });
 
         this.validationController = validationController;
-        this.validationController.validateTrigger = validateTrigger.manual;
-        this.validationRules = validationRules;
-        this.validationRules
-            .ensure('job.title')
-            .length({ minimum: 3})
-            .required({ message: 'Three character minimum'})
-            .on(AddJob);
+        /*this.validationController.validateTrigger = validateTrigger.manual;*/
+
     }
-
-
 
     activate(params, routeConfig, navigationInstruction) {
         this.router = navigationInstruction.router;
@@ -42,11 +36,12 @@ export class AddJob {
 
     save() {
         let errors = this.validationController.validate();
-        /*errors.then()*/
 
-        if (this.job.needDate) {
-            this.job.needDate = new Date(this.job.needDate);
+        if (errors.length === 0) {
+            if (this.job.needDate) {
+                this.job.needDate = new Date(this.job.needDate);
+            }
+            this.dataRepository.addJob(this.job).then(job => this.router.navigateToRoute('jobs'));
         }
-        this.dataRepository.addJob(this.job).then(job => this.router.navigateToRoute('jobs'));
     }
 }

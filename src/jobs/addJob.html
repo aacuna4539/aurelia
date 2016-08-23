@@ -1,5 +1,13 @@
 <template>
-    <form submit.delegate='save()' validation-errors.bind="errors">
+
+    <require from="common/validation-summary.html"></require>
+
+    <form submit.delegate='save()' validation-renderer="bootstrap-form" validation-errors.bind="errors">
+
+        <validation-summary errors.bind="errors"
+                            autofocus.bind="validationController.validateTrigger === 'manual'">
+        </validation-summary>
+
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" value.bind="job.title & validate"
@@ -13,7 +21,7 @@
         <div class="form-group">
             <label for="needDate">Need Date</label>
             <input type="text" id="needDate"
-                   value.bind="job.needDate | dateFormat:'MM/YYYY' & updateTrigger:'blur'" placeholder="Need Date" />
+                   value.bind="job.needDate | dateFormat:'MM/DD/YYYY' & updateTrigger:'blur'" placeholder="Need Date" />
         </div>
         <div class="form-group">
             <label for="jobType">Job Type: </label>

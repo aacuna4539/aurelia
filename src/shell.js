@@ -16,7 +16,7 @@ export class Shell {
         // ie.  www.rootaddress.com/discussions <- reloading page from this address will
         // send throw an error on the server unless server knows to ignore 'discussions'
         config.options.pushState = true;
-
+        
         config.addPipelineStep('authorize', ToastNavResult);
         config.title = 'Aurelia App';
         config.map([
